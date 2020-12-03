@@ -1,0 +1,49 @@
+name: 'Publish release to Rancher catalog'
+description: 'Github Action to publish Scienta release to Rancher catalog'
+inputs:
+  github-deploy-key:
+    description: 'Deploy key for the Rancher catalog repository'
+    required: true
+  github-user:
+    description: 'Username to commit with'
+    required: true
+  github-email:
+    description: 'Email address to commit with'
+    required: true
+  source-relpath:
+    description: 'The path of the helm charts relative to the project root'
+    required: true
+    default: 'helm'
+  dest-repository:
+    description: 'Rancher catalog repository'
+    required: true
+  dest-branch:
+    description: 'Rancher catalog branch'
+    required: true
+  scienta-version:
+    description: 'The version of the release to be published'
+    required: true
+  chart-version:
+    description: 'The chart version of the release to be published. Most of the time the same as the scienta version'
+    required: true
+  chart-suffix:
+    description: 'The suffix of the chart. This will be appended to the rancher app name, making it possible to release multiple apps. Useful for releasing branches.'
+    required: false
+    default: ''
+  commit-sha:
+    description: 'Commit SHA of the release (first 8 characters)'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    GITHUB_DEPLOY_KEY: "${{inputs.github-deploy-key}}"
+    GITHUB_USER: "${{inputs.github-user}}"
+    GITHUB_EMAIL: "${{inputs.github-email}}"
+    SOURCE_RELPATH: "${{inputs.source-relpath}}"
+    DEST_REPOSITORY: "${{inputs.dest-repository}}"
+    DEST_BRANCH: "${{inputs.dest-branch}}"
+    SCIENTA_VERSION: "${{inputs.scienta-version}}"
+    CHART_VERSION: "${{inputs.chart-version}}"
+    CHART_SUFFIX: "${{inputs.chart-suffix}}"
+    COMMIT_SHA: "${{inputs.commit-sha}}"

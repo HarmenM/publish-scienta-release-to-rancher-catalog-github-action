@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  node:
+    container_name: publish-scienta-release-to-rancher-catalog-github-action
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      GITHUB_DEPLOY_KEY: "${GITHUB_DEPLOY_KEY}"
+      GITHUB_USER: "${GITHUB_USER}"
+      GITHUB_EMAIL: "${GITHUB_EMAIL}"
+      DEST_REPOSITORY: "${DEST_REPOSITORY}"
+      DEST_BRANCH: "${DEST_BRANCH}"
+      SOURCE_RELPATH: "${SOURCE_RELPATH}"
+      SCIENTA_VERSION: "${SCIENTA_VERSION}"
+      CHART_SUFFIX: "${CHART_SUFFIX}"
+      COMMIT_SHA: "${COMMIT_SHA}"
+    volumes:
+      - ../scienta:/input
+    working_dir: /input
