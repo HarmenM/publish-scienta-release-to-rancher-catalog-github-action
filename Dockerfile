@@ -14,7 +14,7 @@ ENV COMMIT_SHA=""
 RUN apk add --no-cache git openssh-client && \
   echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
 
-RUN apk add composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # copy app into container
 RUN mkdir /app
